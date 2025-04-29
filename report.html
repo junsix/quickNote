@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickNote 주간 리포트</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="report-page">
+  <div class="report-container">
+    <header>
+      <h1>주간 메모 리포트</h1>
+      <div class="date-range" id="dateRange"></div>
+    </header>
+
+    <div class="report-stats">
+      <div class="stat-card">
+        <div class="stat-title">총 메모</div>
+        <div class="stat-value" id="totalNotes">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">완료된 메모</div>
+        <div class="stat-value" id="completedNotes">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">미완료 메모</div>
+        <div class="stat-value" id="pendingNotes">0</div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h2>태그별 분포</h2>
+      <div class="tag-distribution" id="tagDistribution">
+        <div class="loading">데이터 분석 중...</div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h2>핀 고정된 중요 메모</h2>
+      <div class="pinned-notes" id="pinnedNotes">
+        <div class="loading">메모 로딩 중...</div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h2>미완료 리마인더 메모</h2>
+      <div class="reminder-notes" id="reminderNotes">
+        <div class="loading">메모 로딩 중...</div>
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h2>이번 주 회고 작성</h2>
+      <div class="reflection-area">
+        <textarea id="weeklyReflection" placeholder="이번 주 업무를 되돌아보고 간단한 회고를 작성해 보세요..."></textarea>
+        <button id="saveReflectionButton" class="primary-button">회고 저장</button>
+      </div>
+    </div>
+
+    <div class="report-actions">
+      <button id="exportReportButton" class="secondary-button">리포트 내보내기</button>
+      <button id="startNewWeekButton" class="primary-button">새로운 주 시작하기</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden">
+    <span id="toastMessage"></span>
+  </div>
+
+  <script src="report.js"></script>
+</body>
+</html>

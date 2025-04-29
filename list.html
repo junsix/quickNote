@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickNote 메모 목록</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="list-page">
+  <div class="list-container">
+    <header>
+      <h1>QuickNote</h1>
+      <div class="theme-toggle">
+        <input type="checkbox" id="darkModeToggle" class="toggle-checkbox">
+        <label for="darkModeToggle" class="toggle-label">
+          <span class="toggle-inner"></span>
+          <span class="toggle-switch"></span>
+        </label>
+      </div>
+    </header>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="메모 내용, #태그 검색...">
+      <div class="sort-container">
+        <select id="sortSelect">
+          <option value="newest">최신순</option>
+          <option value="oldest">오래된순</option>
+          <option value="byTag">태그별</option>
+          <option value="pinned">핀 고정만</option>
+          <option value="withReminder">알림 있는 메모만</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filter-chips" id="filterChips">
+      <!-- 선택된 태그 필터 표시 영역 -->
+    </div>
+
+    <div class="memo-list" id="memoList">
+      <!-- 메모 항목들이 JS로 동적 생성됨 -->
+      <div class="loading">메모를 불러오는 중...</div>
+    </div>
+  </div>
+
+  <!-- 메모 상세 보기/편집 모달 -->
+  <div class="modal" id="memoModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>메모 상세</h2>
+        <button class="close-button" id="closeModalButton">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <textarea id="editMemoContent" placeholder="메모 내용"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="text" id="editTagInput" placeholder="#태그 (여러 개는 쉼표로 구분)">
+          <div id="editTagSuggestions" class="tag-suggestions"></div>
+        </div>
+        <div class="form-group url-group">
+          <input type="checkbox" id="editIncludeUrl">
+          <label for="editIncludeUrl">URL 포함</label>
+          <div id="editCurrentUrl" class="current-url"></div>
+        </div>
+        <div class="form-group reminder-group">
+          <input type="checkbox" id="editSetReminder">
+          <label for="editSetReminder">리마인더 설정</label>
+          <div id="editReminderContainer">
+            <input type="datetime-local" id="editReminderTime">
+          </div>
+        </div>
+        <div class="form-group completed-group">
+          <input type="checkbox" id="editCompleted">
+          <label for="editCompleted">완료됨</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="saveEditButton" class="primary-button">저장</button>
+        <button id="pinMemoButton" class="icon-button pin-button" title="핀 고정/해제">📌</button>
+        <button id="deleteMemoButton" class="icon-button delete-button" title="삭제">🗑️</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden">
+    <span id="toastMessage"></span>
+  </div>
+
+  <script src="list.js"></script>
+</body>
+</html>

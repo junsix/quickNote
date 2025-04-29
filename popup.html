@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickNote for Work</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="popup-container">
+    <div class="popup-header">
+      <h1>빠른 메모</h1>
+    </div>
+    
+    <div class="memo-form">
+      <!-- 제목 입력 필드 추가 -->
+      <div class="form-group material-input elegant-input">
+        <input type="text" id="memoTitle" placeholder=" " autofocus>
+        <label for="memoTitle">제목</label>
+      </div>
+      
+      <div class="form-group material-input elegant-input">
+        <textarea id="memoContent" placeholder=" "></textarea>
+        <label for="memoContent">본문을 입력하세요...</label>
+      </div>
+      
+      <div class="form-group material-input elegant-input">
+        <input type="text" id="tagInput" placeholder=" ">
+        <label for="tagInput">#태그 (여러 개는 쉼표로 구분)</label>
+        <div id="tagSuggestions" class="tag-suggestions"></div>
+      </div>
+      
+      <div class="form-group url-group">
+        <label class="switch">
+          <input type="checkbox" id="includeUrl" checked>
+          <span class="slider"></span>
+        </label>
+        <span class="switch-label">현재 URL 포함</span>
+        <div class="current-url" id="currentUrl"></div>
+      </div>
+      
+      <div class="form-group reminder-group">
+        <label class="switch">
+          <input type="checkbox" id="setReminder">
+          <span class="slider"></span>
+        </label>
+        <span class="switch-label">리마인더 설정</span>
+        <div id="reminderContainer" class="hidden material-input">
+          <input type="datetime-local" id="reminderTime">
+        </div>
+      </div>
+      
+      <!-- 저장 버튼을 별도 줄로 이동하고 중앙 정렬 -->
+      <div class="save-button-container">
+        <button id="saveButton" class="primary-button ripple">저장</button>
+      </div>
+      
+      <div class="button-group">
+        <button id="cancelButton" class="secondary-button ripple">취소</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="toast" class="toast hidden">
+    <span id="toastMessage"></span>
+    <button id="viewListButton" class="ripple">바로가기</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
