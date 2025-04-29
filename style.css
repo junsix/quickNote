@@ -288,6 +288,14 @@ button:active {
   border-radius: var(--radius-s);
 }
 
+.material-input textarea {
+  resize: vertical; /* 사용자가 크기를 조절할 수 있도록 수정 */
+  min-height: 180px; /* 기본 최소 높이 180px로 증가 */
+  height: 220px; /* 기본 높이를 220px로 설정 */
+  max-height: 450px; /* 최대 높이 제한 */
+  transition: height 0.3s ease; /* 부드러운 높이 변환 효과 */
+}
+
 /* 입력 필드 포커스 스타일 개선 */
 .material-input input:focus,
 .material-input textarea:focus,
@@ -382,6 +390,140 @@ input:focus, textarea:focus, select:focus {
   -webkit-text-fill-color: transparent;
   font-weight: 500;
   letter-spacing: 0.5px;
+}
+
+/* 커스텀 텍스트 입력 스타일 */
+.custom-input-container {
+  position: relative;
+  margin-bottom: var(--spacing-l);
+}
+
+.custom-input {
+  width: 100%;
+  padding: 16px 18px;
+  border: 2px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: var(--text-color);
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(5px);
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: rgba(25, 118, 210, 0.5);
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 5px 15px rgba(25, 118, 210, 0.15);
+  transform: translateY(-2px);
+}
+
+.custom-input-label {
+  position: absolute;
+  top: -12px;
+  left: 15px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 0 8px;
+  background-color: var(--bg-color);
+  z-index: 2;
+  transform-origin: left;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* 포커스 시 레이블이 더 위로 올라가고 스타일 변경 */
+.custom-input:focus + .custom-input-label {
+  top: -15px;
+  font-size: 11px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+  -webkit-background-clip: text;
+  letter-spacing: 0.5px;
+  transform: translateY(-3px);
+}
+
+.custom-input-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15px;
+  right: 15px;
+  height: 2px;
+  background-color: var(--bg-color);
+  z-index: 1;
+}
+
+/* 커스텀 텍스트 영역 스타일 */
+.custom-textarea {
+  min-height: 180px;
+  height: 220px;
+  resize: vertical;
+  line-height: 1.6;
+  max-height: 450px;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(245, 247, 250, 0.8));
+}
+
+/* 다크 모드에서의 커스텀 입력 스타일 */
+body.dark-mode .custom-input {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(30, 30, 30, 0.8);
+  color: var(--text-color);
+}
+
+body.dark-mode .custom-input:focus {
+  border-color: rgba(144, 202, 249, 0.5);
+  background-color: rgba(40, 40, 40, 0.95);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .custom-input-container::after {
+  background-color: var(--bg-color);
+}
+
+body.dark-mode .custom-input-label {
+  background: linear-gradient(135deg, var(--color-primary), rgba(144, 202, 249, 0.7));
+  -webkit-background-clip: text;
+  background-color: var(--bg-color);
+}
+
+/* 커스텀 텍스트 입력 호버 효과 */
+.custom-input:hover:not(:focus) {
+  border-color: rgba(25, 118, 210, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 커스텀 입력 플레이스홀더 스타일 */
+.custom-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.custom-input:focus::placeholder {
+  opacity: 0.4;
+}
+
+/* 커스텀 입력 상태 표시 (애니메이션) */
+@keyframes customInputSuccess {
+  0%, 100% { border-color: rgba(25, 118, 210, 0.5); }
+  50% { border-color: rgba(76, 175, 80, 0.6); }
+}
+
+.custom-input-success {
+  animation: customInputSuccess 1.5s ease-in-out;
+}
+
+/* 태그 입력 특별 스타일 */
+.custom-input-tags {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.3px;
 }
 
 /* 가로 구분선 스타일 */
@@ -731,7 +873,7 @@ header {
 
 .memo-content {
   margin-bottom: var(--spacing-s);
-  word-break: break-word;
+  word-break: word-break;
   flex-grow: 1;
 }
 
@@ -1288,6 +1430,41 @@ input:checked + .slider:before {
   box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 
+/* 노트의 URL 표시 스타일 */
+.note-url {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  margin-top: 4px;
+  color: var(--text-secondary);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note-url .material-icons {
+  font-size: 13px;
+  margin-right: 4px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.note-url a {
+  color: var(--color-primary);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+  max-width: 100%;
+}
+
+.note-url a:hover {
+  text-decoration: underline;
+  color: var(--color-primary-dark);
+}
+
 /* 노트 액션 버튼 개선 */
 .note-actions {
   display: flex;
@@ -1345,7 +1522,7 @@ input:checked + .slider:before {
   border-radius: var(--radius-m);
   font-size: 14px;
   cursor: pointer;
-  min-width: 150px;
+  width: 100px;
 }
 
 .material-select:focus {
@@ -1367,6 +1544,42 @@ input:checked + .slider:before {
   flex-direction: column;
   box-sizing: border-box; /* 패딩이 높이에 포함되도록 설정 */
   flex-shrink: 0; /* 컨테이너가 축소될 때 크기 유지 */
+  position: relative; /* 플로팅 버튼의 기준점이 되도록 상대 위치 설정 */
+}
+
+/* 플로팅 저장 버튼 스타일 */
+.floating-save-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 10;
+}
+
+.floating-save-button:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.floating-save-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.floating-save-button .material-icons {
+  font-size: 24px;
 }
 
 /* 리마인더 스타일 개선 */

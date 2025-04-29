@@ -5,7 +5,6 @@ const newNoteContent = document.getElementById('newNoteContent');
 const newNoteTags = document.getElementById('newNoteTags');
 const saveNoteBtn = document.getElementById('saveNoteBtn');
 const filterSelect = document.getElementById('filterSelect');
-const sortSelect = document.getElementById('sortSelect');
 const openReportBtn = document.getElementById('openReportBtn');
 
 // 메모 편집 모달 요소
@@ -14,7 +13,6 @@ const editNoteTitle = document.getElementById('editNoteTitle');
 const editNoteContent = document.getElementById('editNoteContent');
 const editNoteTags = document.getElementById('editNoteTags');
 const saveEditBtn = document.getElementById('saveEditBtn');
-const cancelEditBtn = document.getElementById('cancelEditBtn');
 const closeEditModal = document.getElementById('closeEditModal');
 
 // 토스트 메시지 요소
@@ -25,23 +23,18 @@ let currentEditingNoteId = null;
 
 // 현재 필터 옵션
 let currentFilter = 'all';
-let currentSort = 'newest';
-
-// 전역 변수로 검색어 추가
 let currentSearchQuery = '';
 
 document.addEventListener('DOMContentLoaded', () => {
   loadNotes();
   
-  // 기존 이벤트 리스너 등록
+  // 이벤트 리스너 등록
   saveNoteBtn.addEventListener('click', addNewNote);
   filterSelect.addEventListener('change', handleFilterChange);
-  sortSelect.addEventListener('change', handleSortChange);
   openReportBtn.addEventListener('click', openWeeklyReport);
   
   // 메모 편집 모달 이벤트 리스너 등록
   saveEditBtn.addEventListener('click', saveEditNote);
-  cancelEditBtn.addEventListener('click', closeEditNoteModal);
   closeEditModal.addEventListener('click', closeEditNoteModal);
   
   // 모달 외부 클릭 시 닫기
@@ -58,8 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
   searchInput.addEventListener('input', handleSearchInput);
   clearSearchBtn.addEventListener('click', clearSearch);
   
-  // Material Input 라벨 동작
-  setupMaterialInputs();
 });
 
 // 검색 입력 처리
@@ -123,9 +114,6 @@ function renderNotes(notes) {
     });
   }
   
-  // 정렬 적용
-  filteredNotes = sortNotes(filteredNotes, currentSort);
-  
   if (filteredNotes.length === 0) {
     // 검색 결과가 없는 경우 메시지 표시
     if (currentSearchQuery) {
@@ -156,26 +144,6 @@ function renderNotes(notes) {
   });
 }
 
-// 정렬 기능 추가
-function sortNotes(notes, sortType) {
-  const sortedNotes = [...notes];
-  
-  switch(sortType) {
-    case 'newest':
-      return sortedNotes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    case 'oldest':
-      return sortedNotes.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    case 'title':
-      return sortedNotes.sort((a, b) => {
-        const titleA = a.title || '';
-        const titleB = b.title || '';
-        return titleA.localeCompare(titleB);
-      });
-    default:
-      return sortedNotes;
-  }
-}
-
 // 필터에 따른 메모 필터링
 function filterNotes(notes, filter) {
   switch(filter) {
@@ -193,12 +161,6 @@ function filterNotes(notes, filter) {
 // 필터 변경 핸들러
 function handleFilterChange() {
   currentFilter = filterSelect.value;
-  loadNotes();
-}
-
-// 정렬 변경 핸들러
-function handleSortChange() {
-  currentSort = sortSelect.value;
   loadNotes();
 }
 
@@ -443,36 +405,49 @@ function addNewNote() {
     .map(tag => tag.trim())
     .filter(tag => tag);
   
+  // 메모 객체 생성 (초기값은 null로 설정)
   const newNote = {
     id: Date.now().toString(),
-    title: title, // 제목 필드 추가
+    title: title,
     content: content,
     tags: tags,
-    url: null,
+    url: null,  // URL은 현재 탭에서 가져올 예정
     reminder: null,
     createdAt: new Date().toISOString(),
     pinned: false,
     completed: false
   };
   
-  chrome.storage.sync.get(['notes'], (result) => {
-    const notes = result.notes || [];
-    notes.unshift(newNote);
+  // 현재 활성화된 탭의 URL 가져오기
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    // 활성 탭이 있으면 URL 저장
+    if (tabs && tabs.length > 0 && tabs[0].url) {
+      // chrome:// 페이지나 확장 페이지는 제외
+      if (!tabs[0].url.startsWith('chrome://') && !tabs[0].url.startsWith('chrome-extension://')) {
+        newNote.url = tabs[0].url;
+      }
+    }
     
-    chrome.storage.sync.set({ notes }, () => {
-      // 입력 필드 초기화
-      newNoteTitle.value = '';
-      newNoteContent.value = '';
-      newNoteTags.value = '';
-      newNoteTitle.classList.remove('has-content');
-      newNoteContent.classList.remove('has-content');
-      newNoteTags.classList.remove('has-content');
+    // 저장소에 메모 저장
+    chrome.storage.sync.get(['notes'], (result) => {
+      const notes = result.notes || [];
+      notes.unshift(newNote);
       
-      // 성공 토스트 메시지 표시
-      showToast('메모가 저장되었습니다.');
-      
-      // 화면 갱신
-      loadNotes();
+      chrome.storage.sync.set({ notes }, () => {
+        // 입력 필드 초기화
+        newNoteTitle.value = '';
+        newNoteContent.value = '';
+        newNoteTags.value = '';
+        newNoteTitle.classList.remove('has-content');
+        newNoteContent.classList.remove('has-content');
+        newNoteTags.classList.remove('has-content');
+        
+        // 성공 토스트 메시지 표시
+        showToast('메모가 저장되었습니다.');
+        
+        // 화면 갱신
+        loadNotes();
+      });
     });
   });
 }
@@ -725,7 +700,6 @@ function setReminder(noteId) {
     }, 10);
     
     const saveButton = modalBody.querySelector('#saveReminder');
-    const cancelButton = modalBody.querySelector('#cancelReminder');
     
     saveButton.addEventListener('click', () => {
       const dateInput = modalBody.querySelector('#reminderDate');
@@ -752,9 +726,6 @@ function setReminder(noteId) {
       closeModal(modal);
     });
     
-    cancelButton.addEventListener('click', () => {
-      closeModal(modal);
-    });
   });
 }
 

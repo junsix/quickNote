@@ -8,7 +8,6 @@ const setReminderCheckbox = document.getElementById('setReminder');
 const reminderContainer = document.getElementById('reminderContainer');
 const reminderTimeInput = document.getElementById('reminderTime');
 const saveButton = document.getElementById('saveButton');
-const cancelButton = document.getElementById('cancelButton');
 const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
 const viewListButton = document.getElementById('viewListButton');
@@ -37,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 이벤트 리스너 등록
   saveButton.addEventListener('click', saveMemo);
-  cancelButton.addEventListener('click', closePopup);
   setReminderCheckbox.addEventListener('change', toggleReminderInput);
   tagInput.addEventListener('input', handleTagInput);
   tagInput.addEventListener('keydown', handleTagKeydown);

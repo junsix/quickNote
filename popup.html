@@ -8,26 +8,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="popup-container">
-    <div class="popup-header">
-      <h1>빠른 메모</h1>
-    </div>
+  <div class="popup-container" style="padding-top: 20px;">
     
     <div class="memo-form">
-      <!-- 제목 입력 필드 추가 -->
-      <div class="form-group material-input elegant-input">
-        <input type="text" id="memoTitle" placeholder=" " autofocus>
-        <label for="memoTitle">제목</label>
+      <!-- 제목 입력 필드 -->
+      <div class="form-group custom-input-container">
+        <input type="text" id="memoTitle" placeholder="제목을 입력하세요" class="custom-input" autofocus>
+        <label class="custom-input-label">제목</label>
       </div>
       
-      <div class="form-group material-input elegant-input">
-        <textarea id="memoContent" placeholder=" "></textarea>
-        <label for="memoContent">본문을 입력하세요...</label>
+      <!-- 내용 입력 필드 -->
+      <div class="form-group custom-input-container">
+        <textarea id="memoContent" placeholder="내용을 입력하세요" class="custom-input custom-textarea"></textarea>
+        <label class="custom-input-label">내용</label>
       </div>
       
-      <div class="form-group material-input elegant-input">
-        <input type="text" id="tagInput" placeholder=" ">
-        <label for="tagInput">#태그 (여러 개는 쉼표로 구분)</label>
+      <!-- 태그 입력 필드 -->
+      <div class="form-group custom-input-container">
+        <input type="text" id="tagInput" placeholder="태그를 쉼표로 구분하여 입력하세요" class="custom-input custom-input-tags">
+        <label class="custom-input-label">#태그</label>
         <div id="tagSuggestions" class="tag-suggestions"></div>
       </div>
       
@@ -54,10 +53,6 @@
       <!-- 저장 버튼을 별도 줄로 이동하고 중앙 정렬 -->
       <div class="save-button-container">
         <button id="saveButton" class="primary-button ripple">저장</button>
-      </div>
-      
-      <div class="button-group">
-        <button id="cancelButton" class="secondary-button ripple">취소</button>
       </div>
     </div>
   </div>

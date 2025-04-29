@@ -19,54 +19,43 @@
     
     <!-- 새 메모 입력 영역 -->
     <div class="new-note">
-      <div class="material-input">
-        <input type="text" id="newNoteTitle" placeholder=" ">
-        <label for="newNoteTitle">제목</label>
+      <div class="custom-input-container">
+        <input type="text" id="newNoteTitle" placeholder="제목을 입력하세요" class="custom-input">
+        <label class="custom-input-label">제목</label>
       </div>
-      <div class="material-input">
-        <textarea id="newNoteContent" class="note-input" placeholder=" "></textarea>
-        <label for="newNoteContent">내용 입력</label>
+      <div class="custom-input-container">
+        <textarea id="newNoteContent" class="custom-input custom-textarea" placeholder="내용을 입력하세요"></textarea>
+        <label class="custom-input-label">내용</label>
       </div>
-      <div class="material-input">
-        <input type="text" id="newNoteTags" placeholder=" ">
-        <label for="newNoteTags">태그 (쉼표로 구분)</label>
+      <div class="custom-input-container">
+        <input type="text" id="newNoteTags" placeholder="태그를 쉼표로 구분하여 입력하세요" class="custom-input custom-input-tags">
+        <label class="custom-input-label">태그</label>
       </div>
-      <div class="note-buttons">
-        <div>
-          <button id="saveNoteBtn" class="primary-button">
-            <span class="material-icons">save</span> 저장
-          </button>
-        </div>
-      </div>
+      <button id="saveNoteBtn" class="floating-save-button" title="저장">
+        <span class="material-icons">save</span>
+      </button>
     </div>
     
     <!-- 필터 옵션 -->
     <div class="filter-options">
         <div class="filter-row">
             <select id="filterSelect" class="material-select">
-                <option value="all">전체 메모</option>
-                <option value="pinned">고정된 메모</option>
-                <option value="active">미완료된 메모</option>
-                <option value="completed">완료된 메모</option>
-                <option value="today">오늘 작성</option>
-                <option value="thisWeek">이번 주 작성</option>
+                <option value="all">전체</option>
+                <option value="pinned">고정</option>
+                <option value="active">미완료</option>
+                <option value="completed">완료</option>
             </select>
-            <select id="sortSelect" class="material-select">
-                <option value="newest">최신순</option>
-                <option value="oldest">오래된순</option>
-                <option value="title">제목순</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- 메모 검색 영역 -->
-    <div class="search-container">
-        <div class="search-input-wrapper">
-            <span class="material-icons search-icon">search</span>
-            <input type="text" id="searchInput" placeholder="메모 검색..." class="search-input">
-            <button id="clearSearchBtn" class="clear-search-btn">
-            <span class="material-icons">close</span>
-            </button>
+                
+            <!-- 메모 검색 영역 -->
+            <div class="search-container">
+              <div class="search-input-wrapper">
+                  <span class="material-icons search-icon">search</span>
+                  <input type="text" id="searchInput" placeholder="메모 검색..." class="search-input">
+                  <button id="clearSearchBtn" class="clear-search-btn">
+                  <span class="material-icons">close</span>
+                  </button>
+              </div>
+            </div>
         </div>
     </div>
           
@@ -86,21 +75,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="material-input">
-          <input type="text" id="editNoteTitle" placeholder=" ">
-          <label for="editNoteTitle">제목</label>
+        <div class="custom-input-container">
+          <input type="text" id="editNoteTitle" placeholder="제목을 입력하세요" class="custom-input">
+          <label class="custom-input-label">제목</label>
         </div>
-        <div class="material-input">
-          <textarea id="editNoteContent" placeholder=" "></textarea>
-          <label for="editNoteContent">내용</label>
+        <div class="custom-input-container">
+          <textarea id="editNoteContent" placeholder="내용을 입력하세요" class="custom-input custom-textarea"></textarea>
+          <label class="custom-input-label">내용</label>
         </div>
-        <div class="material-input">
-          <input type="text" id="editNoteTags" placeholder=" ">
-          <label for="editNoteTags">태그 (쉼표로 구분)</label>
+        <div class="custom-input-container">
+          <input type="text" id="editNoteTags" placeholder="태그를 쉼표로 구분하여 입력하세요" class="custom-input custom-input-tags">
+          <label class="custom-input-label">태그</label>
         </div>
       </div>
       <div class="modal-footer">
-        <button id="cancelEditBtn" class="icon-button">취소</button>
         <button id="saveEditBtn" class="primary-button">저장</button>
       </div>
     </div>
